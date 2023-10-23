@@ -1,0 +1,5 @@
+# @package _global_
+defaults:
+  - /model: transformer
+  - /data: calvin-generative
+  - /optimizer: base

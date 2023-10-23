@@ -1,0 +1,20 @@
+# @package _global_
+defaults:
+  - _self_
+  - experiment: base
+
+name: "baseline"
+
+seed: 42
+training.seed: ${seed}
+data.seed: ${seed}
+
+hydra:
+  output_subdir: null
+  job_logging:
+    colorlog: "disabled"
+  run:
+    dir: .
+
+wandb:
+  project: "policy-experiments"

@@ -1,0 +1,29 @@
+# @package _global_
+defaults:
+  - /model: transformer
+  - /data: calvin-generative
+  - /optimizer: base
+
+training:
+  device: "cuda"
+  seed: 42
+  num_epochs: 51
+  batch_size: 16
+  num_workers: 2
+  pin_memory: True
+  shuffle_train: True
+  shuffle_val: False
+  load_goal_encoder_weights: True
+  load_goal_encoder_weights_path: "./experiments/goal_encoder-ver1/weights/last-50.pt"
+  
+
+evaluation:
+  calvin:
+    train_folder: "evaluation/calvin/calvin_models/calvin_agent/D_D_static_rgb_baseline/"
+    conf_dir: "evaluation/calvin/calvin_models/conf"
+    dataset_path: "/datasets/calvin_new/task_D_D"
+    subset: training
+  checkpoint: "experiments/baseline5/weights/last-475.pt"
+  device: "cuda"
+  debug: false
+  add_noise_during_inference: false

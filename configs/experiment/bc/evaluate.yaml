@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+  - /model: transformer
+  - /data: calvin-generative
+  - /optimizer: base
+
+evaluation:
+  calvin:
+    train_folder: "evaluation/calvin/calvin_models/calvin_agent/D_D_static_rgb_baseline/"
+    conf_dir: "evaluation/calvin/calvin_models/conf"
+    dataset_path: "/datasets/calvin_new/task_D_D"
+    subset: training
+    output:
+  checkpoint: "experiments/baseline5/weights/last-475.pt"
+  device: "cuda"
+  debug: true

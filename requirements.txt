@@ -1,0 +1,17 @@
+numpy
+lightning
+tqdm
+hydra-core
+wandb
+black==23.1.0
+isort==5.12.0
+pylint
+pre-commit
+pandas
+scikit-learn
+seaborn
+chardet
+argparse
+transformers
+tokenizers
+sentencepiece
