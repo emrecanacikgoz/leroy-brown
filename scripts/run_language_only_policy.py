@@ -86,7 +86,7 @@ def main(cfg: OmegaConf):
         dropout=cfg.model.dropout,
         activation=cfg.model.activation,
         num_tasks=cfg.data.num_tasks,
-        embedding_size=cfg.model.goal_encoder.latent_goal_encoder_features,
+        embedding_size=cfg.model.goal_encoder.latent_features,
         output_vocabs=train_data.target_vocabs,
     ).to(device)
     
