@@ -109,6 +109,22 @@ class LangEmbeddings:
                 .float()
             )
         }
+    
+
+def load_checkpoint(language_encoder, transformer, checkpoint, checkpoint_path, device):
+    language_encoder.to(device)
+    transformer.to(device)
+    print(next(transformer.parameters()).device)
+    print(f"Loading checkpoints from {checkpoint_path}")
+    transformer.load_state_dict(checkpoint["model"])
+    transformer.eval()
+    transformer.to(device)
+    language_encoder.load_state_dict(checkpoint["language_encoder"])
+    language_encoder.eval()
+    language_encoder.to(device)
+    print("Successfully loaded...")
+    
+    return {"language_encoder": language_encoder, "transformer": transformer}
 
 
 def join_vis_lang(img, lang_text, out, id, succes_flag, action, robot_obs, scene_obs):

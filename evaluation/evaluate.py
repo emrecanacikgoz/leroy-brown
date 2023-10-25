@@ -16,6 +16,7 @@ from blind_robot.model.encoders.language_encoder import LanguageEncoder
 from blind_robot.dataset.dataset import CalvinDataset
 from evaluation.rollout import rollout
 from evaluation.utils import get_default_env
+from evaluation.utils import load_checkpoint
 from evaluation.utils import TASK_TO_ID_DICT_ROTATE_VAL_64, TASK_TO_ID_DICT_ROTATE_TRAIN_64
 
 
@@ -86,10 +87,7 @@ def main(cfg: DictConfig):
     #     inp, tgt, ss, es, m, lbl = d
     #     gold_data_map [sid] = (inp, tgt, lbl)
     print("Step2 - task set-up: DONE")
-
     n_input = valid_data.input_dim()
-    num_tasks = cfg.data.num_tasks
-    context_size = cfg.data.window
 
     # set encoders
     language_encoder = LanguageEncoder(
@@ -100,7 +98,7 @@ def main(cfg: DictConfig):
         num_tasks=cfg.data.num_tasks,
         l2_normalize_language_embeddings=cfg.model.language_encoder.l2_normalize_language_embeddings,
     ).to(device)
-    
+
     # set policy
     transformer = ActionDecoder(
         n_input=n_input,
@@ -112,27 +110,13 @@ def main(cfg: DictConfig):
         dropout=cfg.model.dropout,
         activation=cfg.model.activation,
         num_tasks=cfg.data.num_tasks,
-        embedding_size=cfg.model.goal_encoder.latent_goal_encoder_features,
+        embedding_size=cfg.model.goal_encoder.latent_features,
         output_vocabs=train_data.target_vocabs,
     ).to(device)
 
+    # load weights
     device = cfg.evaluation.device
-
-    language_encoder.to(device)
-    transformer.to(device)
-    print(next(transformer.parameters()).device)
-    print(f"Loading checkpoints from {cfg.evaluation.checkpoint}")
-    transformer.load_state_dict(checkpoint["model"])
-    transformer.eval()
-    transformer.to(device)
-    language_encoder.load_state_dict(checkpoint["language_encoder"])
-    language_encoder.eval()
-    language_encoder.to(device)
-    print("Successfully loaded...")
-    model = {
-        "language_encoder": language_encoder,
-        "transformer": transformer,
-    }
+    model = load_checkpoint(language_encoder, transformer, checkpoint, cfg.evaluation.checkpoint, device)
     print("Step3 - loading model: DONE")
 
     # create folder for videos
