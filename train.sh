@@ -26,12 +26,13 @@ echo 'number of processors:'$(nproc)
 nvidia-smi
 
 
-python run_language_only_policy.py \
+python run_language_goal_policy.py \
     experiment=bc/train \
-    name=language_encoder-ver5-dropout \
+    name=language_encoder-goal_encoder-ver5\
     training.num_epochs=1000 \
     training.batch_size=16 \
     optimizer.lr=5e-5 \
+    optimizer.lamda_auxiliary=2.0 \
     
     
 source deactivate
