@@ -1,0 +1,8 @@
+2023-10-23
+        * LanguageEncoder trainings are implemented for both fc_in and mlp; lets see the val-acc difference.
+        * Some other hyperparam experiments are on going, focusing on mlp.
+        * It can easly overfit to train-acc; what is wrong with val-acc?
+        * Try some noisy regularization tricks.
+        * Check if the env-states and and robot-states match.
+        * GoalEncoder should be added; (i) LangEncoder inputs only, (ii) all data with curriculm learning.
+        * Can we train as a diffusion policy?
