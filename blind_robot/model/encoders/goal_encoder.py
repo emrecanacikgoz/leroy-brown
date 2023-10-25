@@ -1,13 +1,12 @@
 import pytorch_lightning as pl
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
 class StateGoalEncoder(pl.LightningModule):
-    def __init__(self, in_features: int=15, hidden_size: int=64, latent_goal_encoder_features: int=128, l2_normalize_goal_embeddings: bool=False):
+    def __init__(self, in_features: int=15, hidden_size: int=64, latent_goal_encoder_features: int=128, l2_normalize_embeddings: bool=False):
         super().__init__()
-        self.l2_normalize_output = l2_normalize_goal_embeddings
+        self.l2_normalize_output = l2_normalize_embeddings
         self.mlp = nn.Sequential(
             nn.Linear(in_features=in_features, out_features=hidden_size),
             # nn.BatchNorm1d(hidden_size),

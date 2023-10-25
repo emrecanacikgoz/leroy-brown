@@ -22,11 +22,9 @@ class LanguageEncoder(pl.LightningModule):
             nn.Linear(in_features=in_features+task_embedding_size, out_features=hidden_size),
             #nn.BatchNorm1d(hidden_size),
             nn.ReLU(),
-            #nn.Dropout(p=0.1),
             nn.Linear(in_features=hidden_size, out_features=hidden_size),
             #nn.BatchNorm1d(hidden_size),
             nn.ReLU(),
-            #nn.Dropout(p=0.1),
             nn.Linear(in_features=hidden_size, out_features=latent_language_encoder_features),
         )
         #self.fc_in = nn.Linear(in_features=in_features+task_embedding_size, out_features=latent_language_encoder_features)
