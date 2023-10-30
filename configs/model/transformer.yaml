@@ -1,17 +1,17 @@
 goal_encoder:
-  hidden_size: 64
-  latent_features: 256
+  hidden_size: 32
+  latent_features: 128
   l2_normalize_embeddings: False
 
 language_encoder:
-  task_embedding_size: 64
-  language_encoder_hidden_size: 128
-  latent_language_encoder_features: 256
+  task_embedding_size: 32
+  language_encoder_hidden_size: 64
+  latent_language_encoder_features: 128
   l2_normalize_language_embeddings: False
-hidden_size: 512
-n_layer: 8
-n_heads: 4
-dim_feedforward: 1024
+hidden_size: 256
+n_layer: 2
+n_heads: 2
+dim_feedforward: 512
 dropout: 0
 activation: "gelu"
 norm_first: False

@@ -1,8 +1,8 @@
 train_path: "data/D_training.pkl"
 val_path: "data/D_validation.pkl"
 input_features:
-  - robot_obs_xyz
   - robot_obs_g
+  - robot_obs_xyz
   - scene_obs_red_xyz
   - scene_obs_blue_xyz
   - scene_obs_pink_xyz
