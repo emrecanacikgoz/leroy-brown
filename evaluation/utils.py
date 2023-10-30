@@ -111,20 +111,32 @@ class LangEmbeddings:
         }
     
 
-def load_checkpoint(language_encoder, transformer, checkpoint, checkpoint_path, device):
-    language_encoder.to(device)
-    transformer.to(device)
-    print(next(transformer.parameters()).device)
-    print(f"Loading checkpoints from {checkpoint_path}")
-    transformer.load_state_dict(checkpoint["model"])
-    transformer.eval()
-    transformer.to(device)
-    language_encoder.load_state_dict(checkpoint["language_encoder"])
-    language_encoder.eval()
-    language_encoder.to(device)
-    print("Successfully loaded...")
+def load_checkpoint(language_encoder=None, goal_encoder=None, transformer=None, checkpoint=None, checkpoint_path=None, device=None):
+    print(f"loading checkpoints from {checkpoint_path}")
+    if language_encoder:
+        print("loading language encoder...")
+        language_encoder.to(device)
+        language_encoder.load_state_dict(checkpoint["language_encoder"])
+        language_encoder.eval()
+        language_encoder.to(device)
+        print("successfully loaded language encoder...")
+    if goal_encoder:
+        print("loading goal encoder...")
+        goal_encoder.to(device)
+        goal_encoder.load_state_dict(checkpoint["goal_encoder"])
+        goal_encoder.eval()
+        goal_encoder.to(device)
+        print("successfully loaded goal encoder...")
+    if transformer:  
+        print("loading transformer...")  
+        transformer.to(device)
+        transformer.load_state_dict(checkpoint["model"])
+        transformer.eval()
+        transformer.to(device)
+        print("successfully loaded transformer...")
+    print("everything loaded successfully...")
     
-    return {"language_encoder": language_encoder, "transformer": transformer}
+    return {"language_encoder": language_encoder, "goal_encoder": goal_encoder, "transformer": transformer}
 
 
 def join_vis_lang(img, lang_text, out, id, succes_flag, action, robot_obs, scene_obs):
