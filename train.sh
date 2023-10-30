@@ -10,7 +10,7 @@
 #SBATCH --constraint=tesla_t4
 #SBATCH --mem=32G
 #SBATCH --time=7-0:0:0
-#SBATCH --output=%J.log
+#SBATCH --output=%J-10k-samples.log
 #SBATCH --mail-type=BEGIN,END,FAIL,TIME_LIMIT_80
 #SBATCH --mail-user=eacikgoz17@ku.edu.tr
 
@@ -26,14 +26,12 @@ echo 'number of processors:'$(nproc)
 nvidia-smi
 
 
-python run_language_goal_policy.py \
+python run_goal_policy.py \
     experiment=bc/train \
-    name=language_encoder-goal_encoder-ver5\
-    training.num_epochs=1000 \
+    name=goal_encoder-ver5\
+    training.num_epochs=1500 \
     training.batch_size=16 \
     optimizer.lr=5e-5 \
-    optimizer.lamda_auxiliary=2.0 \
-    
     
 source deactivate
 
