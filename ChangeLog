@@ -1,3 +1,9 @@
+2023-10-30
+        * GoalEncoder experiments done; we cannot do control when we give the goal-embeddings as task-condition. It memorizes tasks a lot.
+        * Without label, just by giving end states, it memorizes with other tasks that ends at that state. Not a good formulation.
+        * Lets create our own train/val splits and use their val set as eval set. This way, check if we still get zero acc on our val.
+        * In above, goal is to see if the overfitting problem is still the case in our val set. If it is not, their/train val distribution is not good.
+
 2023-10-23
         * LanguageEncoder trainings are implemented for both fc_in and mlp; lets see the val-acc difference.
         * Some other hyperparam experiments are on going, focusing on mlp.
