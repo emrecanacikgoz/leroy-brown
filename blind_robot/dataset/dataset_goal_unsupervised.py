@@ -108,18 +108,22 @@ class CalvinDatasetGoalUnsupervised(CalvinDataset):
         return source, target, source_start_state, source_end_state, mask
 
 
-    def _get_random_window(self, min_window_length=32, max_window_length=64, num_samples_to_generate=10_000):
-        if num_samples_to_generate > len(self.input_feature_data):
-            print(f"WARNING: num_samples_to_generate ({num_samples_to_generate}) > len(self.input_feature_data) ({len(self.input_feature_data)}). Setting num_samples_to_generate to len(self.input_feature_data).")
-            num_samples_to_generate = len(self.input_feature_data)
+    def _get_random_window(self):
+        if self.num_samples_to_generate > len(self.input_feature_data):
+            print(f"WARNING: num_samples_to_generate ({self.num_samples_to_generate}) > len(self.input_feature_data) ({len(self.input_feature_data)}). Setting num_samples_to_generate to len(self.input_feature_data).")
+            self.num_samples_to_generate = len(self.input_feature_data)
 
-        print(f"Generating {num_samples_to_generate} random windows...")
+        print(f"Generating {self.num_samples_to_generate} random windows...")
+
+        if self.path.split("/")[-1].split(".")[0].endswith("validation"):
+            generate_range = len(self.input_feature_data)
+        else:
+            generate_range = self.num_samples_to_generate
 
         random_windows_source, random_windows_target = [], []
-        for i in tqdm(range(num_samples_to_generate)):
-
+        for i in tqdm(range(generate_range)):
             random_start_index = np.random.randint(0, len(self.input_feature_data))
-            window_length = np.random.randint(min_window_length, max_window_length)
+            window_length = np.random.randint(self.min_window_length, self.max_window_length)
             random_stop_index = random_start_index + window_length
             source_episode = self.input_feature_data[random_start_index:random_stop_index, :]
             target_episode = self.target_feature_data[random_start_index:random_stop_index, :]
