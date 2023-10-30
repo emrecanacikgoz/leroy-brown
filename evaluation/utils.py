@@ -243,7 +243,7 @@ def add_text(img, lang_text):
         )
 
 
-TASK_TO_ID_DICT_ROTATE_VAL_64 = {
+TASK_TO_ID_DICT_ROTATE_EVAL_64 = {
     "rotate_red_block_right": [
         403887,
         403896,
@@ -274,6 +274,15 @@ TASK_TO_ID_DICT_ROTATE_VAL_64 = {
         36343,
         36350,
         12982,
+    ],
+}
+
+TASK_TO_ID_DICT_ROTATE_VAL_64 = {
+    "rotate_red_block_right": [
+        191586,
+        100484,
+        132050,
+        87244
     ],
 }
 
@@ -322,8 +331,8 @@ TASK_TO_ID_DICT_ROTATE_TRAIN_64 = {
         135547,
         87102,
         191592,
-        100484,
-        191586,
+        #100484,
+        #191586,
         132056,
         191583,
         94331,
@@ -331,7 +340,7 @@ TASK_TO_ID_DICT_ROTATE_TRAIN_64 = {
         132064,
         57358,
         57350,
-        132050,
+        #132050,
         181025,
         181009,
     ],
