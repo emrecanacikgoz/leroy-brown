@@ -73,7 +73,7 @@ class CheckpointSaver:
         torch.save(checkpoint, path)
         return path
     
-    def save_last_unsupervised(self,goal_encoder, policy, opt, scheduler, epoch):
+    def save_last_unsupervised(self, policy, goal_encoder, opt, scheduler, epoch):
         path = self.get_save_path(epoch)
         checkpoint = {
             "goal_encoder": goal_encoder.state_dict(),

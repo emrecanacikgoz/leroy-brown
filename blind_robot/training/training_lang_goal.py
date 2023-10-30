@@ -30,11 +30,16 @@ def process_batch_supervised(model, language_encoder, goal_encoder, opt, lambda_
         embed_g = goal_encoder(inputs_rand, end_states_rand)
 
         # last-frame padding for auxilary loss
-        if embed_g.shape[1] != embed_l.shape[1]:
+        if embed_g.shape[1] < embed_l.shape[1]:
             last_frame = embed_g[:, -1, :].unsqueeze(1)
             window_diff = embed_l.shape[1] - embed_g.shape[1]
             last_frame = last_frame.repeat(1, window_diff, 1)
             embed_g = torch.cat([embed_g, last_frame], dim=1)
+        elif embed_g.shape[1] > embed_l.shape[1]:
+            last_frame = embed_l[:, -1, :].unsqueeze(1)
+            window_diff = embed_g.shape[1] - embed_l.shape[1]
+            last_frame = last_frame.repeat(1, window_diff, 1)
+            embed_l = torch.cat([embed_l, last_frame], dim=1)
 
         # auxilary loss
         auxilary_loss = F.mse_loss(embed_g, embed_l, reduction="none").mean()
@@ -101,6 +106,7 @@ def process_batch_supervised(model, language_encoder, goal_encoder, opt, lambda_
 def train_batch_supervised(model, language_encoder, goal_encoder, opt, lambda_aux, train_loader, device):
     model.train()
     language_encoder.train()
+    goal_encoder.train()
     train_loss = process_batch_supervised(model, language_encoder, goal_encoder, opt, lambda_aux, train_loader, device, train=True)
     return train_loss
 
@@ -108,6 +114,7 @@ def train_batch_supervised(model, language_encoder, goal_encoder, opt, lambda_au
 def valid_batch_supervised(model, language_encoder, goal_encoder, opt, lambda_aux, valid_loader, device):
     model.eval()
     language_encoder.eval()
+    goal_encoder.eval()
     with torch.no_grad():
         valid_loss = process_batch_supervised(model, language_encoder, goal_encoder, opt, lambda_aux, valid_loader, device, train=False)
 
