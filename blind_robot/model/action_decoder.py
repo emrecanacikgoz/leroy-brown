@@ -3,6 +3,8 @@ import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 
+from blind_robot.model.encoders.goal_encoder import StateGoalEncoder
+from blind_robot.model.encoders.language_encoder import LanguageEncoder
 from blind_robot.model.utils.positional_encoder import PositionalEncoding
 
 
@@ -24,10 +26,8 @@ class ActionDecoder(pl.LightningModule):
         super().__init__()
 
         self.num_tasks = num_tasks
-
         self.output_vocabs = output_vocabs
         self.discrete_actions = output_vocabs is not None
-
 
         self.register_buffer(
             "mask",
