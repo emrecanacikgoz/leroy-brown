@@ -1,5 +1,6 @@
-train_path: "data/D_training.pkl"
-val_path: "data/D_validation.pkl"
+train_path: "data/D_training_ours.pkl"
+val_path: "data/D_validation_ours.pkl"
+eval_path: "data/D_validation.pkl"
 input_features:
   - robot_obs_g
   - robot_obs_xyz
@@ -9,8 +10,9 @@ input_features:
 target_features:
   - rel_actions
 window: 64
-min_window_size: 32
-max_window_size: 64
+min_window_length: 32
+max_window_length: 64
+num_samples_to_generate: 10_000
 batch_ratio: 0.5 # batch ratio of language conditioned samples
 goal_conditioned_class_id: 100 # FIXME: 100 is the id of the none class in the goal conditioned dataset, see dataloader
 data_filter:
